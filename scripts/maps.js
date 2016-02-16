@@ -13,8 +13,15 @@ function initMap() {
   var onChangeHandler = function() {
     calculateAndDisplayRoute(directionsService, directionsDisplay);
   };
-  document.getElementById('start').addEventListener('change', onChangeHandler);
-  document.getElementById('end').addEventListener('change', onChangeHandler);
+  
+  var form = document.querySelector("form");
+  form.addEventListener("submit", function(event) {
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    event.preventDefault();
+  });
+  
+  // document.getElementById('start').addEventListener('change', onChangeHandler);
+  // document.getElementById('end').addEventListener('change', onChangeHandler);
   document.getElementById('mode').addEventListener('change', onChangeHandler);
 }
 
@@ -27,6 +34,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
       console.log(response);
+      console.log(response.routes[0].legs[0].duration.value, " minutes");
+      console.log(response.routes[0].legs[0].distance.value, " meters");
     } else {
       window.alert('Directions request failed due to ' + status);
     }
