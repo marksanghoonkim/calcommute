@@ -10,6 +10,53 @@ function initMap() {
   });
   directionsDisplay.setMap(map);
 
+
+  var startInput = document.getElementById('start');
+  var startAutocomplete = new google.maps.places.Autocomplete(startInput);
+
+  var endInput = document.getElementById('end');
+  var endAutocomplete = new google.maps.places.Autocomplete(endInput);
+
+  // autocomplete.bindTo('bounds', map);
+
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  // var infowindow = new google.maps.InfoWindow();
+  // var marker = new google.maps.Marker({
+  //   map: map
+  // });
+  // marker.addListener('click', function() {
+  //   infowindow.open(map, marker);
+  // });
+
+  // autocomplete.addListener('place_changed', function() {
+  //   infowindow.close();
+  //   var place = autocomplete.getPlace();
+  //   if (!place.geometry) {
+  //     return;
+  //   }
+
+  //   if (place.geometry.viewport) {
+  //     map.fitBounds(place.geometry.viewport);
+  //   } else {
+  //     map.setCenter(place.geometry.location);
+  //     map.setZoom(17);
+  //   }
+
+  //   // Set the position of the marker using the place ID and location.
+  //   marker.setPlace({
+  //     placeId: place.place_id,
+  //     location: place.geometry.location
+  //   });
+  //   marker.setVisible(true);
+
+  //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+  //       'Place ID: ' + place.place_id + '<br>' +
+  //       place.formatted_address);
+  //   infowindow.open(map, marker);
+  // });
+
+
   var onChangeHandler = function() {
     calculateAndDisplayRoute(directionsService, directionsDisplay);
   };
@@ -65,6 +112,7 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
     travelMode: 'DRIVING'
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
+      console.log(response);
       directionsDisplay.setDirections(response);
       if (modes.driving.length === 2) {
         modes.driving[0] = response.routes[0].legs[0].duration.value;
@@ -166,4 +214,22 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
     }
   });
 
-}
+};
+
+function buildGetUrl() {
+
+  var str1 = 'https://maps.googleapis.com/maps/api/directions/json?';
+  var str2 = 'key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY';
+  var str3 = '&origin=Beverly+Hills,+CA&destination=604+Arizona+Ave,+Santa+Monica,+CA+90401';
+  var str4 = '&departure_time=1455724800';
+  var str5 = '&mode=bicycling';
+};
+
+function getEstimatedTravelTimes(url) {
+  // $.ajax({
+  //   url: url,
+  //   data: data,
+  //   success: success,
+  //   dataType: dataType
+  // });
+};
