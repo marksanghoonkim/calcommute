@@ -1,5 +1,3 @@
-
-
 function initMap() {
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -54,10 +52,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function calculateDrivingCosts(distance) {
-  // averaging 25 mph at $3 per gallon
+  // averaging 20 mph at $3 per gallon
   // calculating 40 times a week
   // 8 cents depeciation per mile
-  return distance / 1609 / 25 * 3.08 * 40;
+  return (distance / 1609 / 25 * 3 + distance/1609*0.08) * 40;
 }
 
 function calculateDurationsAndDistances(directionsService, directionsDisplay) {
@@ -126,14 +124,14 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
                   // console.log(response.routes[0].legs[0].distance.value, " meters");
                   console.log(modes);
                   $(".table").empty();
-                  $(".table").append("<p> Driving will take " + modes.driving[0]/60 + " minutes each way.</p>");
-                  $(".table").append("<p> Driving will cost " + calculateDrivingCosts(modes.driving[1]) + " dollars per month</p>");
-                  $(".table").append("<p> Transit will take " + modes.transit[0]/60 + " minutes each way.</p>");
-                  $(".table").append("<p> Transit will cost $100 per month</p>");
-                  $(".table").append("<p> Bicycling will take " + modes.bicycling[0]/60 + " minutes each way.</p>");
+                  $(".table").append("<p> Driving will take " + (modes.driving[0]/60).toFixed(2) + " minutes each way.</p>");
+                  $(".table").append("<p> Driving will cost " + calculateDrivingCosts(modes.driving[1]).toFixed(2) + " dollars per month.</p>");
+                  $(".table").append("<p> Transit will take " + (modes.transit[0]/60).toFixed(2) + " minutes each way.</p>");
+                  $(".table").append("<p> Transit will cost $100 per month.</p>");
+                  $(".table").append("<p> Bicycling will take " + (modes.bicycling[0]/60).toFixed(2) + " minutes each way.</p>");
                   $(".table").append("<p> Bicycling will cost $0 (if you have a bike).</p>");
-                  $(".table").append("<p> Walking will take " + modes.walking[0]/60 + " minutes each way.</p>");
-                  $(".table").append("<p> Walking will cost $0. Period.</p>");
+                  $(".table").append("<p> Walking will take " + (modes.walking[0]/60).toFixed(2) + " minutes each way.</p>");
+                  $(".table").append("<p> Walking will cost $0.</p>");
                   // need to display the stuff
 
 
