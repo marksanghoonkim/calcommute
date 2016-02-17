@@ -23,7 +23,7 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY&libraries=places&signed_in=true&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY&libraries=places&signed_in=false&v=3.22&callback=initMap"
         async defer></script>
     <!-- Custom CSS -->
     <style>
@@ -51,6 +51,13 @@
       padding-left: 10px;
     }
 
+    input {
+      width: 30%;
+    }
+    table, th, td {
+      padding: 5px;
+      border: 1px solid black;
+    }
     </style>
 
 </head>
@@ -64,16 +71,15 @@
         <div class="row">
           <label>Home: </label>
           <input type="text" id="start" placeholder="Home" value="Beverly Hills, CA">
-        </div>
-        <div class="row">
           <label>Work: </label>
           <input type="text" id="end" placeholder="Work" value="604 Arizona Ave, Santa Monica, CA">
           <button type="submit">Calculate!</button>
         </div>
+        
       </form>
     <!-- </div> -->
   </div>
-  <div id="floating-panel">
+  <div >
       <b>Mode of Travel: </b>
       <select id="mode">
         <option value="DRIVING">Driving</option>
@@ -83,8 +89,13 @@
       </select>
   </div>
   <div id="map"></div>
-  <div class="table">
-
-  </div>
+  <table class="table">
+    <colgroup span="3"></colgroup>
+    <tr>
+      <th>Mode</th>
+      <th>Time Per Commute</th>
+      <th>Cost Per Month</th>
+    </tr>
+  </table>
 </body>
 </html>

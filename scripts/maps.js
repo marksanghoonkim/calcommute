@@ -4,6 +4,7 @@ function initMap() {
   // var distanceMatrixService = new google.maps.DistanceMatrixRequest;
   // var distanceMatrixResponseService = new google.maps.DistanceMatrixResponseElement;
 
+
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: {lat: 34.0, lng: -118.28}
@@ -17,46 +18,6 @@ function initMap() {
   var endInput = document.getElementById('end');
   var endAutocomplete = new google.maps.places.Autocomplete(endInput);
 
-  // autocomplete.bindTo('bounds', map);
-
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-  // var infowindow = new google.maps.InfoWindow();
-  // var marker = new google.maps.Marker({
-  //   map: map
-  // });
-  // marker.addListener('click', function() {
-  //   infowindow.open(map, marker);
-  // });
-
-  // autocomplete.addListener('place_changed', function() {
-  //   infowindow.close();
-  //   var place = autocomplete.getPlace();
-  //   if (!place.geometry) {
-  //     return;
-  //   }
-
-  //   if (place.geometry.viewport) {
-  //     map.fitBounds(place.geometry.viewport);
-  //   } else {
-  //     map.setCenter(place.geometry.location);
-  //     map.setZoom(17);
-  //   }
-
-  //   // Set the position of the marker using the place ID and location.
-  //   marker.setPlace({
-  //     placeId: place.place_id,
-  //     location: place.geometry.location
-  //   });
-  //   marker.setVisible(true);
-
-  //   infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-  //       'Place ID: ' + place.place_id + '<br>' +
-  //       place.formatted_address);
-  //   infowindow.open(map, marker);
-  // });
-
-
   var onChangeHandler = function() {
     calculateAndDisplayRoute(directionsService, directionsDisplay);
   };
@@ -67,9 +28,8 @@ function initMap() {
     event.preventDefault();
   });
   
-  // document.getElementById('start').addEventListener('change', onChangeHandler);
-  // document.getElementById('end').addEventListener('change', onChangeHandler);
   document.getElementById('mode').addEventListener('change', onChangeHandler);
+  
 }
 
 // times are stored in minutes
@@ -106,10 +66,15 @@ function calculateDrivingCosts(distance) {
 }
 
 function calculateDurationsAndDistances(directionsService, directionsDisplay) {
+  // var dTime = new Date(1455724800);
   directionsService.route({
     origin: document.getElementById('start').value,
     destination: document.getElementById('end').value,
-    travelMode: 'DRIVING'
+    travelMode: 'DRIVING',
+    drivingOptions: {
+      departureTime: new Date('February 16, 2016 17:30:00'),
+      // trafficModel: 'best_guess'
+    }
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       console.log(response);
@@ -121,7 +86,6 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
       } else {
         modes.driving.push(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
       }
-      
 
       directionsService.route({
         origin: document.getElementById('start').value,
@@ -150,7 +114,6 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
               } else {
                 modes.bicycling.push(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
               }
-              // modes.bicycling.push(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
               
               directionsService.route({
                 origin: document.getElementById('start').value,
@@ -166,49 +129,42 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
                     modes.walking.push(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
                   }
 
-                  // modes.walking.push(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
-                  // console.log('WALKING');
-                  // console.log(response.routes[0].legs[0].duration.value, " minutes");
-                  // console.log(response.routes[0].legs[0].distance.value, " meters");
+                  var startID = response.geocoded_waypoints[0].place_id;
+                  var endID = response.geocoded_waypoints[1].place_id;
+
+                  builtURL = buildGetUrl(startID, endID, 'DRIVING');
+
+                  // getEstimatedTravelTimes(builtURL);
+
+                  console.log(builtURL);
+
                   console.log(modes);
-                  $(".table").empty();
-                  $(".table").append("<p> Driving will take " + (modes.driving[0]/60).toFixed(2) + " minutes each way.</p>");
-                  $(".table").append("<p> Driving will cost " + calculateDrivingCosts(modes.driving[1]).toFixed(2) + " dollars per month.</p>");
-                  $(".table").append("<p> Transit will take " + (modes.transit[0]/60).toFixed(2) + " minutes each way.</p>");
-                  $(".table").append("<p> Transit will cost $100 per month.</p>");
-                  $(".table").append("<p> Bicycling will take " + (modes.bicycling[0]/60).toFixed(2) + " minutes each way.</p>");
-                  $(".table").append("<p> Bicycling will cost $0 (if you have a bike).</p>");
-                  $(".table").append("<p> Walking will take " + (modes.walking[0]/60).toFixed(2) + " minutes each way.</p>");
-                  $(".table").append("<p> Walking will cost $0.</p>");
-                  // need to display the stuff
-
-
+                  $(".stuff").remove();
+                  $(".table").append("<tr class='stuff'> <td> Driving </td><td>" + (modes.driving[0]/60).toFixed(2) + " min</td><td>$" + calculateDrivingCosts(modes.driving[1]).toFixed(2) + "</td></tr>");
+                  $(".table").append("<tr class='stuff'> <td> Transit </td><td>" + (modes.transit[0]/60).toFixed(2) + " min</td><td>$100</td></tr>");
+                  $(".table").append("<tr class='stuff'> <td> Bicycling </td><td>" + (modes.bicycling[0]/60).toFixed(2) + " min</td><td>$0 if you have a bike</td></tr>");
+                  $(".table").append("<tr class='stuff'> <td> Walking </td><td>" + (modes.walking[0]/60).toFixed(2) + " min</td><td>$0</td></tr>");
+                  // $(".table").append("<p> Driving will take " + (modes.driving[0]/60).toFixed(2) + " minutes each way.</p>");
+                  // $(".table").append("<p> Driving will cost " + calculateDrivingCosts(modes.driving[1]).toFixed(2) + " dollars per month.</p>");
+                  // $(".table").append("<p> Transit will take " + (modes.transit[0]/60).toFixed(2) + " minutes each way.</p>");
+                  // $(".table").append("<p> Transit will cost $100 per month.</p>");
+                  // $(".table").append("<p> Bicycling will take " + (modes.bicycling[0]/60).toFixed(2) + " minutes each way.</p>");
+                  // $(".table").append("<p> Bicycling will cost $0 (if you have a bike).</p>");
+                  // $(".table").append("<p> Walking will take " + (modes.walking[0]/60).toFixed(2) + " minutes each way.</p>");
+                  // $(".table").append("<p> Walking will cost $0.</p>");
 
                 } else {
                   window.alert('Directions request failed due to ' + status);
                 }
               });
-
-              // console.log('BICYCLING');
-              // console.log(response.routes[0].legs[0].duration.value, " minutes");
-              // console.log(response.routes[0].legs[0].distance.value, " meters");
             } else {
               window.alert('Directions request failed due to ' + status);
             }
           });
-
-
-          // console.log('TRANSIT');
-          // console.log(response.routes[0].legs[0].duration.value, " minutes");
-          // console.log(response.routes[0].legs[0].distance.value, " meters");
         } else {
           window.alert('Directions request failed due to ' + status);
         }
       });
-
-      // console.log('DRIVING');
-      // console.log(response.routes[0].legs[0].duration.value, " minutes");
-      // console.log(response.routes[0].legs[0].distance.value, " meters");
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -216,20 +172,34 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
 
 };
 
-function buildGetUrl() {
+function buildGetUrl(start, end, mode) {
 
   var str1 = 'https://maps.googleapis.com/maps/api/directions/json?';
   var str2 = 'key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY';
-  var str3 = '&origin=Beverly+Hills,+CA&destination=604+Arizona+Ave,+Santa+Monica,+CA+90401';
+  var str3 = '&origin=place_id:'+ start + '&destination=place_id:' + end;
   var str4 = '&departure_time=1455724800';
-  var str5 = '&mode=bicycling';
+  var str5 = '&mode=' + mode;
+
+  return str1 + str2 + str3 + str4 + str5;
 };
 
 function getEstimatedTravelTimes(url) {
-  // $.ajax({
-  //   url: url,
-  //   data: data,
-  //   success: success,
-  //   dataType: dataType
-  // });
+  $.ajax({
+    // type: "GET",
+    // headers: Upgrade-Insecure-Requests:1
+    // url: url,
+
+    url: url,
+    headers: {
+      'Access-Control-Request-Headers': 'http://localhost:8000'
+    },
+    type: 'GET',
+    dataType: 'json',
+    success: function() { console.log('Success!'); },
+    error: function() { console.log('Uh Oh!'); },
+    // jsonp: false
+  }).done(function (data) {
+      console.log(data);
+  });
+
 };
