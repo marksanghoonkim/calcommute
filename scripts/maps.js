@@ -1,9 +1,6 @@
-function initMap() {
+function initMap () {
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
-  // var distanceMatrixService = new google.maps.DistanceMatrixRequest;
-  // var distanceMatrixResponseService = new google.maps.DistanceMatrixResponseElement;
-
 
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
@@ -27,7 +24,7 @@ function initMap() {
     calculateDurationsAndDistances(directionsService, directionsDisplay);
     event.preventDefault();
   });
-  
+
   document.getElementById('mode').addEventListener('change', onChangeHandler);
   
 }
@@ -59,9 +56,11 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function calculateDrivingCosts(distance) {
-  // averaging 20 mph at $3 per gallon
-  // calculating 40 times a week
+  // averaging 20 mpg at $3 per gallon
+  // calculating 40 times a month
   // 8 cents depeciation per mile
+
+  // TODO: get current cost of gas + input for vehicle mpg
   return (distance / 1609 / 25 * 3 + distance/1609*0.08) * 40;
 }
 
@@ -142,16 +141,8 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
                   $(".stuff").remove();
                   $(".table").append("<tr class='stuff'> <td> Driving </td><td>" + (modes.driving[0]/60).toFixed(2) + " min</td><td>$" + calculateDrivingCosts(modes.driving[1]).toFixed(2) + "</td></tr>");
                   $(".table").append("<tr class='stuff'> <td> Transit </td><td>" + (modes.transit[0]/60).toFixed(2) + " min</td><td>$100</td></tr>");
-                  $(".table").append("<tr class='stuff'> <td> Bicycling </td><td>" + (modes.bicycling[0]/60).toFixed(2) + " min</td><td>$0 if you have a bike</td></tr>");
+                  $(".table").append("<tr class='stuff'> <td> Bicycling </td><td>" + (modes.bicycling[0]/60).toFixed(2) + " min</td><td>$0</td></tr>");
                   $(".table").append("<tr class='stuff'> <td> Walking </td><td>" + (modes.walking[0]/60).toFixed(2) + " min</td><td>$0</td></tr>");
-                  // $(".table").append("<p> Driving will take " + (modes.driving[0]/60).toFixed(2) + " minutes each way.</p>");
-                  // $(".table").append("<p> Driving will cost " + calculateDrivingCosts(modes.driving[1]).toFixed(2) + " dollars per month.</p>");
-                  // $(".table").append("<p> Transit will take " + (modes.transit[0]/60).toFixed(2) + " minutes each way.</p>");
-                  // $(".table").append("<p> Transit will cost $100 per month.</p>");
-                  // $(".table").append("<p> Bicycling will take " + (modes.bicycling[0]/60).toFixed(2) + " minutes each way.</p>");
-                  // $(".table").append("<p> Bicycling will cost $0 (if you have a bike).</p>");
-                  // $(".table").append("<p> Walking will take " + (modes.walking[0]/60).toFixed(2) + " minutes each way.</p>");
-                  // $(".table").append("<p> Walking will cost $0.</p>");
 
                 } else {
                   window.alert('Directions request failed due to ' + status);

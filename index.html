@@ -3,93 +3,84 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>Calcommute</title>
+  <title>Calcommute</title>
 
-<!--    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script src="scripts/maps.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script src="scripts/maps.js"></script>
 
-    <!-- Bootstrap Core CSS -->
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-    <!-- jQuery Version 1.11.1 -->
-    <script src="js/jquery.js"></script>
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery Version 1.11.1 -->
+  <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY&libraries=places&signed_in=false&v=3.22&callback=initMap"
-        async defer></script>
-    <!-- Custom CSS -->
-    <style>
+  <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY&libraries=places&signed_in=false&v=3.22&callback=initMap"
+      async defer></script>
+  <!-- Custom CSS -->
+  <style>
 
-    html, body {
-      height: 100%;
-      margin: 5px;
-      padding: 5px;
-    }
-    #map {
-      height: 75%;
-      width: 75%;
-    }
-    #floating-panel {
-      position: absolute;
-      top: 10px;
-      left: 25%;
-      z-index: 5;
-      background-color: #fff;
-      padding: 5px;
-      border: 1px solid #999;
-      text-align: center;
-      font-family: 'Roboto','sans-serif';
-      line-height: 30px;
-      padding-left: 10px;
-    }
+  html, body {
+    height: 100%;
+    margin: 5px;
+    padding: 5px;
+  }
+  #map {
+    height: 60%;
+    width: 100%;
+  }
 
-    input {
-      width: 30%;
-    }
-    table, th, td {
-      padding: 5px;
-      border: 1px solid black;
-    }
-    </style>
+  input {
+    width: 30%;
+  }
+  table, th, td {
+    padding: 5px;
+    border: 1px solid black;
+  }
+  h1 {
+    text-align: center;
+  }
+  </style>
 
 </head>
 
 <body>
-  <h1>Calcommute</h1>
-
-  <div class="row">
-   <!--  <div class="col-lg-12 text-left"> -->
-      <form id="search">
-        <div class="row">
-          <label>Home: </label>
-          <input type="text" id="start" placeholder="Home" value="Beverly Hills, CA">
-          <label>Work: </label>
-          <input type="text" id="end" placeholder="Work" value="604 Arizona Ave, Santa Monica, CA">
-          <button type="submit">Calculate!</button>
-        </div>
-        
-      </form>
-    <!-- </div> -->
+  <div class="container">
+    <h1>Calcommute</h1>
   </div>
-  <div >
-      <b>Mode of Travel: </b>
+  <div class="container">
+    <div class="col-lg-12 text-center">
+      <form id="search">
+        <label>Home: </label>
+        <input type="text" id="start" placeholder="Home" value="Beverly Hills, CA">
+        <label>Work: </label>
+        <input type="text" id="end" placeholder="Work" value="604 Arizona Ave, Santa Monica, CA">
+        <button type="submit">Calculate!</button>
+      </form>
+
+    </div>
+  </div>
+  <!-- <div class="container">
+    <div class="col-lg-12 text-center">
+      Mode of Travel:
       <select id="mode">
         <option value="DRIVING">Driving</option>
         <option value="WALKING">Walking</option>
         <option value="BICYCLING">Bicycling</option>
         <option value="TRANSIT">Transit</option>
       </select>
-  </div>
+    </div>
+  </div> -->
   <div id="map"></div>
-  <table class="table">
+  <br>
+  <table class="table table-bordered table-hover">
     <colgroup span="3"></colgroup>
     <tr>
       <th>Mode</th>
