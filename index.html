@@ -6,8 +6,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Commute Calculator">
+  <meta name="author" content="Mark Kim">
 
   <title>Calcommute</title>
 
@@ -25,48 +25,44 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY&libraries=places&signed_in=false&v=3.22&callback=initMap"
       async defer></script>
   <!-- Custom CSS -->
-  <style>
-
-  html, body {
-    height: 100%;
-    margin: 5px;
-    padding: 5px;
-  }
-  #map {
-    height: 60%;
-    width: 100%;
-  }
-
-  input {
-    width: 30%;
-  }
-  table, th, td {
-    padding: 5px;
-    border: 1px solid black;
-  }
-  h1 {
-    text-align: center;
-  }
-  </style>
-
+  <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-  <div class="container">
+  <div class="container col-xs-12">
     <h1>Calcommute</h1>
+    <p class="dev-info">by Mark Kim</p>
+    <span>Calculate the cost of your commute with one click!</span>
   </div>
-  <div class="container">
-    <div class="col-lg-12 text-center">
-      <form id="search">
+  <br>
+  <div class="container col-xs-12 map-form">
+<!--     <form class="form-inline" id="search">
+      <div class="form-group">
         <label>Home: </label>
-        <input type="text" id="start" placeholder="Home" value="Beverly Hills, CA">
+        <input type="text" class="form-control" id="start" placeholder="Home" value="Beverly Hills, CA">
+      </div>
+      <div class="form-group">
         <label>Work: </label>
-        <input type="text" id="end" placeholder="Work" value="604 Arizona Ave, Santa Monica, CA">
-        <button type="submit">Calculate!</button>
-      </form>
-
+        <input type="text" class="form-control" id="end" placeholder="Work" value="Santa Monica, CA">
+      </div>
+      <button class="btn btn-default" type="submit">Calculate!</button>
+    </form> -->
+    <form id="search">
+    <div class="row">
+      <div class="calc-form col-xs-12 col-md-4">
+        <input type="text" class="form-control" id="start" placeholder="Home Address">
+      </div>
+      <div class="calc-form col-xs-12 col-md-4">
+        <input type="text" class="form-control" id="end" placeholder="Work Address">
+      </div>
+      <div class="calc-form col-xs-12 col-md-4">
+        <button class="btn btn-default" type="submit">Calculate!</button>
+      </div>
+      
     </div>
+    </form>
   </div>
+   
   <!-- <div class="container">
     <div class="col-lg-12 text-center">
       Mode of Travel:
@@ -78,8 +74,10 @@
       </select>
     </div>
   </div> -->
-  <div id="map"></div>
   <br>
+  <div class="container" id="map"></div>
+  <br>
+  <div class="table-responsive">
   <table class="table table-bordered table-hover">
     <colgroup span="3"></colgroup>
     <tr>
@@ -88,5 +86,6 @@
       <th>Cost Per Month</th>
     </tr>
   </table>
+  </div>
 </body>
 </html>

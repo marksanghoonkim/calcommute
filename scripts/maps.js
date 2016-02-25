@@ -25,7 +25,7 @@ function initMap () {
     event.preventDefault();
   });
 
-  document.getElementById('mode').addEventListener('change', onChangeHandler);
+  // document.getElementById('mode').addEventListener('change', onChangeHandler);
   
 }
 
