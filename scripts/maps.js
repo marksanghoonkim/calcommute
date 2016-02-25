@@ -69,10 +69,10 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
   directionsService.route({
     origin: document.getElementById('start').value,
     destination: document.getElementById('end').value,
-    travelMode: 'DRIVING',
+    travelMode: google.maps.TravelMode.DRIVING,
     drivingOptions: {
-      departureTime: new Date('February 16, 2016 17:30:00'),
-      // trafficModel: 'best_guess'
+      departureTime: new Date('November 15, 2016 07:30:00'),
+      trafficModel: google.maps.TrafficModel.PESSIMISTIC
     }
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
@@ -174,40 +174,40 @@ function buildGetUrl(start, end, mode) {
 };
 
 function getEstimatedTravelTimes(url) {
-  // $.ajax({
-  //   // type: "GET",
-  //   // headers: Upgrade-Insecure-Requests:1
-  //   // url: url,
+  $.ajax({
+    // type: "GET",
+    // headers: Upgrade-Insecure-Requests:1
+    // url: url,
 
-  //   url: url,
-  //   // headers: {
-  //   //   'Access-Control-Request-Headers': 'http://localhost:8000'
-  //   // },
-  //   type: 'GET',
-  //   dataType: 'json',
-  //   success: function() { console.log('Success!'); },
-  //   error: function() { console.log('Uh Oh!'); },
-  //   // jsonp: false
-  // }).done(function (data) {
-  //     console.log(data);
-  // });
+    url: url,
+    // headers: {
+    //   'Access-Control-Request-Headers': 'http://localhost:8000'
+    // },
+    type: 'GET',
+    dataType: 'json',
+    success: function() { console.log('Success!'); },
+    error: function() { console.log('Uh Oh!'); },
+    // jsonp: false
+  }).done(function (data) {
+      console.log(data);
+  });
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.send(null);
+  // var xhr = new XMLHttpRequest();
+  // xhr.open('GET', url);
+  // xhr.send(null);
 
-  xhr.onreadystatechange = function () {
-    var DONE = 4; // readyState 4 means the request is done.
-    var OK = 200; // status 200 is a successful return.
-    if (xhr.readyState === DONE) {
-      if (xhr.status === OK) {
-        alert('worked!');
-        console.log(xhr.responseText); // 'This is the returned text.'
-      }
-    } else {
-      console.log('Error: ' + xhr.status); // An error occurred during the request.
-    }
-  }
+  // xhr.onreadystatechange = function () {
+  //   var DONE = 4; // readyState 4 means the request is done.
+  //   var OK = 200; // status 200 is a successful return.
+  //   if (xhr.readyState === DONE) {
+  //     if (xhr.status === OK) {
+  //       alert('worked!');
+  //       console.log(xhr.responseText); // 'This is the returned text.'
+  //     }
+  //   } else {
+  //     console.log('Error: ' + xhr.status); // An error occurred during the request.
+  //   }
+  // }
 };
 
 // };
