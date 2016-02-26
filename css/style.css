@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  margin: 5px;
+  padding: 5px;
+}
+#map {
+  height: 60%;
+  width: 100%;
+}
+table, th, td {
+  padding: 5px;
+  border: 1px solid black;
+}
+h1 {
+  text-align: left;
+}
+.dev-info {
+  font-size: 12px;
+}
+
+.map-form {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.calc-form {
+  padding-top: 5px;
+  padding-bottom: 5px;  
+}

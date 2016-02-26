@@ -25,7 +25,7 @@ function initMap () {
     event.preventDefault();
   });
 
-  document.getElementById('mode').addEventListener('change', onChangeHandler);
+  // document.getElementById('mode').addEventListener('change', onChangeHandler);
   
 }
 
@@ -69,10 +69,10 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
   directionsService.route({
     origin: document.getElementById('start').value,
     destination: document.getElementById('end').value,
-    travelMode: 'DRIVING',
+    travelMode: google.maps.TravelMode.DRIVING,
     drivingOptions: {
-      departureTime: new Date('February 16, 2016 17:30:00'),
-      // trafficModel: 'best_guess'
+      departureTime: new Date('November 15, 2016 07:30:00'),
+      trafficModel: google.maps.TrafficModel.PESSIMISTIC
     }
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
@@ -132,8 +132,7 @@ function calculateDurationsAndDistances(directionsService, directionsDisplay) {
                   var endID = response.geocoded_waypoints[1].place_id;
 
                   builtURL = buildGetUrl(startID, endID, 'DRIVING');
-
-                  // getEstimatedTravelTimes(builtURL);
+                  getEstimatedTravelTimes(builtURL);
 
                   console.log(builtURL);
 
@@ -168,8 +167,8 @@ function buildGetUrl(start, end, mode) {
   var str1 = 'https://maps.googleapis.com/maps/api/directions/json?';
   var str2 = 'key=AIzaSyBsuyXFzWz2N8WbGJ5dIm97oLUln4gxIHY';
   var str3 = '&origin=place_id:'+ start + '&destination=place_id:' + end;
-  var str4 = '&departure_time=1455724800';
-  var str5 = '&mode=' + mode;
+  var str4 = '&departure_time=1479222000';
+  var str5 = '&mode=' + mode + '&traffic_model=pessimistic';
 
   return str1 + str2 + str3 + str4 + str5;
 };
@@ -181,9 +180,9 @@ function getEstimatedTravelTimes(url) {
     // url: url,
 
     url: url,
-    headers: {
-      'Access-Control-Request-Headers': 'http://localhost:8000'
-    },
+    // headers: {
+    //   'Access-Control-Request-Headers': 'http://localhost:8000'
+    // },
     type: 'GET',
     dataType: 'json',
     success: function() { console.log('Success!'); },
@@ -193,4 +192,22 @@ function getEstimatedTravelTimes(url) {
       console.log(data);
   });
 
+  // var xhr = new XMLHttpRequest();
+  // xhr.open('GET', url);
+  // xhr.send(null);
+
+  // xhr.onreadystatechange = function () {
+  //   var DONE = 4; // readyState 4 means the request is done.
+  //   var OK = 200; // status 200 is a successful return.
+  //   if (xhr.readyState === DONE) {
+  //     if (xhr.status === OK) {
+  //       alert('worked!');
+  //       console.log(xhr.responseText); // 'This is the returned text.'
+  //     }
+  //   } else {
+  //     console.log('Error: ' + xhr.status); // An error occurred during the request.
+  //   }
+  // }
 };
+
+// };
